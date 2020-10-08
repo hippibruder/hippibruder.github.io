@@ -1,0 +1,40 @@
+#piece {
+    padding: 30px;
+}
+
+.block {
+    display: inline-block;
+    border-style: outset;
+    width: 15px;
+    height: 15px;
+}
+
+/* piece colors */
+.I {
+    background-color: #00F0F0;
+    border-color: #00F0F0;
+}
+.O {
+    background-color: #F0F000;
+    border-color: #F0F000;
+}
+.T {
+    background-color: #A000F0;
+    border-color: #A000F0;
+}
+.S {
+    background-color: #00F000;
+    border-color: #00F000;
+}
+.Z {
+    background-color: #F00000;
+    border-color: #F00000;
+}
+.J {
+    background-color: #0000F0;
+    border-color: #0000F0;
+}
+.L {
+    background-color: #F0A000;
+    border-color: #F0A000;
+}
