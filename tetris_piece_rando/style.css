@@ -1,10 +1,28 @@
-#piece {
+
+#seed {
+    zoom: 0.8;
+}
+
+#next_button {
+    margin-top: 5px;
+}
+
+#pieces {
     padding: 30px;
+}
+
+#piece {
+    padding-bottom: 30px;
+}
+
+.grid {
+    padding: 5px;
 }
 
 .block {
     display: inline-block;
     border-style: outset;
+    border-width: medium;
     width: 15px;
     height: 15px;
 }

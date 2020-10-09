@@ -3,7 +3,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="piece"></div>
+    <div id="seed" title="Seed for the RNG can be set before the first piece is generated. Otherwise a random seed will be used.">
+        Seed: <input id="seed_input">
+    </div>
     <button id="next_button">Next</button>
+    <div id="pieces">
+        <div id="piece"></div>
+        <div id="history"></div>
+    </div>
     <script src="script.js"></script>
 </body>
