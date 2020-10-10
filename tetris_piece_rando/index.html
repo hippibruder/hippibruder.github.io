@@ -6,10 +6,20 @@
     <div id="seed" title="Seed for the RNG can be set before the first piece is generated. Otherwise a random seed will be used.">
         Seed: <input id="seed_input">
     </div>
-    <button id="next_button">Next</button>
     <div id="pieces">
-        <div id="piece"></div>
-        <div id="history"></div>
+        <div>
+            <button id="next_button">Next</button>    
+            <div id="piece"></div>
+            <div id="history"></div>
+        </div>
+        <div id="queue_container">
+            <button id="toggle_queue_button">Queue</button>
+            <div id="queue" hidden>
+                <div id="queue_selector" title="Click piece to add to queue"></div>
+                Upcoming pieces:
+                <div id="queue_pieces" title="Click piece to remove"></div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

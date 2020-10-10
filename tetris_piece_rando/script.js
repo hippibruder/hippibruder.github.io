@@ -54,7 +54,7 @@ const pieces =  [
 
 // Grid of 2 by 4 block elements. Can display a piece.
 class Grid {
-    constructor() {
+    constructor(piece) {
         this.div = document.createElement('div');
         this.grid = [];
 
@@ -73,10 +73,15 @@ class Grid {
             this.div.appendChild(div_row);
         }
         this.div.className = 'grid';
+
+        if (piece) {
+            this.showPiece(piece);
+        }
     }
 
     // Displays a given piece in the grid. To display a piece specific blocks will be made visible.
     showPiece(piece) {
+        this.piece = piece;
         for (let i = 0; i < this.grid.length; i++) {
             const row = this.grid[i];
             for (let j = 0; j < row.length; j++) {
@@ -94,11 +99,23 @@ class Grid {
     }
 }
 
+// Grid embedded in button
+class GridButton extends Grid {
+    constructor(piece) {
+        super(piece);
+        const button = document.createElement('button');
+        button.appendChild(this.div);
+        button.className = 'grid_button'
+        this.div = button;
+    }
+}
+
 // Changes the piece in the given grid.
 class PieceChanger {
-    constructor(grid, getSeed) {
+    constructor(grid, getSeed, queue_manager) {
         this.grid = grid;
         this.getSeed = getSeed;
+        this.queue_manager = queue_manager;
         this.rng = undefined;
         this.current_pieces = [];
         this.last_piece = undefined;
@@ -115,7 +132,13 @@ class PieceChanger {
             this.shuffle(this.current_pieces);
             console.log('new bag');
         }
-        const next = this.current_pieces.pop();
+
+        var next;
+        if (queue_manager.has_piece()) {
+            next = queue_manager.pop();
+        } else {
+            next = this.current_pieces.pop();
+        }
         console.log(next.name);
         this.grid.showPiece(next);
         this.last_piece = next;
@@ -188,10 +211,57 @@ class History {
             oldest.remove();
         }
 
-        const grid = new Grid(this.parent_div);
-        grid.showPiece(piece);
+        const grid = new Grid(piece);
         this.parent_div.prepend(grid.div);
         this.grids.unshift(grid);
+    }
+}
+
+// QueueManager allows manuell adding of pieces
+class QueueManager {
+    constructor() {
+        this.contents = [];
+        this.content_div = document.getElementById('queue_pieces');
+        this._initSelector();
+        const self = this;
+        document.getElementById('toggle_queue_button').onclick = function() { self._toggleVisiblity(); };
+    }
+
+    has_piece() {
+        return this.contents.length > 0;
+    }
+
+    pop() {
+        const grid = this.contents.shift();
+        grid.remove();
+        return grid.piece;
+    }
+
+    _initSelector() {
+        const selector_div = document.getElementById('queue_selector');
+        pieces.forEach(piece => {
+            const grid = new GridButton(piece);
+            const self = this;
+            grid.div.onclick = function() { self._add(piece); };
+            selector_div.appendChild(grid.div);
+        });
+    }
+
+    _toggleVisiblity() {
+        const div = document.getElementById('queue');
+        div.hidden = !div.hidden;
+    }
+
+    _add(piece) {
+        const grid = new GridButton(piece);
+        const self = this;
+        grid.div.onclick = function() { 
+            grid.remove();
+            self.contents = self.contents.filter(g => g !== grid);
+        };
+
+        this.contents.push(grid);
+        this.content_div.appendChild(grid.div);
     }
 }
 
@@ -212,8 +282,10 @@ next_piece_div.appendChild(main_grid.div)
 const history_div = document.getElementById('history');
 const history = new History(history_div, depth=200);
 
+const queue_manager = new QueueManager();
 const getSeed = function() { return seed_input.value; };
-const piece_changer = new PieceChanger(main_grid, getSeed);
+const piece_changer = new PieceChanger(main_grid, getSeed, queue_manager);
+
 
 // register click handler on everything. MORE IS ALWAYS BETTER!
 const next_piece_button = document.getElementById('next_button');

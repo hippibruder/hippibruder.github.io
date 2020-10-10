@@ -1,22 +1,60 @@
 
-#seed {
-    zoom: 0.8;
+body {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#next_button {
-    margin-top: 5px;
+#seed {
+    zoom: 0.8;
+    font-size: smaller;
 }
 
 #pieces {
-    padding: 30px;
+    display: flex;
+    padding: 22px;
+    padding-top: 10px;
+}
+
+#next_button {
+    zoom: 2;
 }
 
 #piece {
-    padding-bottom: 30px;
+    margin-top: 20px;
+    border-style: dashed;
+    border-width: 1px;
+    cursor: pointer;
+}
+
+#history {
+    cursor: pointer;
+}
+
+#queue_container {    
+    margin-left: 50px;
+    font-size: small;
+}
+
+#queue {
+    border-style: ridge;
+    padding: 2px;
+}
+
+#queue_selector {
+    zoom: 0.5;
+    display: flexbox;    
+    padding-bottom: 2px;
+}
+
+#queue_pieces button {
+    display: block;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
 }
 
 .grid {
     padding: 5px;
+    min-width: max-content;
 }
 
 .block {
